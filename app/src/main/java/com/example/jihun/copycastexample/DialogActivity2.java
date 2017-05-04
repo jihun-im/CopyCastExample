@@ -13,8 +13,15 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.jihun.copycastexample.tools.CopyCastUtils;
+import com.example.jihun.copycastexample.tools.GoogleService;
+import com.example.jihun.copycastexample.tools.JsonUrl;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DialogActivity2 extends Activity implements
         OnClickListener {
@@ -22,16 +29,36 @@ public class DialogActivity2 extends Activity implements
     private Button buttonShare, buttonCancel;
     private String clipDataString;
     private EditText editText;
+    private String clipString;
+    private String shortUrl;
+    private String longUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        CharSequence text = getIntent()
-                .getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT);
+        longUrl = getIntent().getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT).toString();
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.pop_up_layout);
         setContent();
-        editText.setText(CopyCastUtils.loadClipString(this) + "\n\n" + text);
+        clipString = CopyCastUtils.loadClipString(this);
+        editText.setText(clipString + "\n\n" + longUrl);
+
+        GoogleService googleService = GoogleService.retrofit.create(GoogleService.class);
+        Call<JsonUrl> call = googleService.getShortUrl(new JsonUrl(longUrl));
+        call.enqueue(new Callback<JsonUrl>() {
+            @Override
+            public void onResponse(Call<JsonUrl> call, Response<JsonUrl> response) {
+                shortUrl = response.body().getId();
+                editText.setText(clipString + "\n\n" + shortUrl);
+            }
+
+            @Override
+            public void onFailure(Call<JsonUrl> call, Throwable t) {
+                Log.d("abc", "onFailure");
+                Toast.makeText(getApplicationContext(), "response failed!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     @Override
