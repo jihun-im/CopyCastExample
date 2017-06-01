@@ -14,9 +14,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.example.jihun.copycastexample.tools.CopyCastUtils;
 import com.example.jihun.copycastexample.tools.GoogleService;
 import com.example.jihun.copycastexample.tools.JsonUrl;
 
@@ -30,9 +28,9 @@ public class DialogActivity2 extends Activity implements
     private Button buttonShare, buttonCancel;
     private String clipDataString;
     private EditText editText;
-    private String clipString="";
-    private String shortUrl="";
-    private String longUrl="";
+    private String clipString = "";
+    private String shortUrl = "";
+    private String longUrl = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +40,12 @@ public class DialogActivity2 extends Activity implements
         setContentView(R.layout.pop_up_layout);
         setContent();
         ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-        if(clipboardManager.hasPrimaryClip()) {
-            clipString = clipboardManager.getPrimaryClip().getItemAt(0).getText().toString();
+        if (clipboardManager.hasPrimaryClip()) {
+            try {
+                clipString = clipboardManager.getPrimaryClip().getItemAt(0).getText().toString();
+            } catch (Exception e) {
+                clipString = "";
+            }
         } else {
             clipString = "";
         }
@@ -56,7 +58,7 @@ public class DialogActivity2 extends Activity implements
             public void onResponse(Call<JsonUrl> call, Response<JsonUrl> response) {
                 try {
                     shortUrl = response.body().getId();
-                } catch (Exception e ) {
+                } catch (Exception e) {
                 }
                 editText.setText(clipString + "\n\n" + shortUrl);
             }
