@@ -52,7 +52,7 @@ public class CopyCastService extends Service {
 
 //                popUpDialog(clipString, loadClipString() );
 
-                CopyCastUtils.saveClipString(CopyCastService.this.getApplicationContext(), clipString);
+//                CopyCastUtils.saveClipString(CopyCastService.this.getApplicationContext(), clipString);
             }
 
 //            private void popUpDialog(String clipString) {

@@ -5,6 +5,7 @@ package com.example.jihun.copycastexample;
  */
 
 import android.app.Activity;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,9 +30,9 @@ public class DialogActivity2 extends Activity implements
     private Button buttonShare, buttonCancel;
     private String clipDataString;
     private EditText editText;
-    private String clipString;
-    private String shortUrl;
-    private String longUrl;
+    private String clipString="";
+    private String shortUrl="";
+    private String longUrl="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,12 @@ public class DialogActivity2 extends Activity implements
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.pop_up_layout);
         setContent();
-        clipString = CopyCastUtils.loadClipString(this);
+        ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        if(clipboardManager.hasPrimaryClip()) {
+            clipString = clipboardManager.getPrimaryClip().getItemAt(0).getText().toString();
+        } else {
+            clipString = "";
+        }
         editText.setText(clipString + "\n\n" + longUrl);
 
         GoogleService googleService = GoogleService.retrofit.create(GoogleService.class);
@@ -48,14 +54,16 @@ public class DialogActivity2 extends Activity implements
         call.enqueue(new Callback<JsonUrl>() {
             @Override
             public void onResponse(Call<JsonUrl> call, Response<JsonUrl> response) {
-                shortUrl = response.body().getId();
+                try {
+                    shortUrl = response.body().getId();
+                } catch (Exception e ) {
+                }
                 editText.setText(clipString + "\n\n" + shortUrl);
             }
 
             @Override
             public void onFailure(Call<JsonUrl> call, Throwable t) {
-                Log.d("abc", "onFailure");
-                Toast.makeText(getApplicationContext(), "response failed!", Toast.LENGTH_SHORT).show();
+                editText.setText(clipString + "\n\n" + longUrl);
             }
         });
 

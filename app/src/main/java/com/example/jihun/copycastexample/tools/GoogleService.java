@@ -12,7 +12,7 @@ import retrofit2.http.POST;
 
 public interface GoogleService {
 
-    @POST("urlshortener/v1/url?key=YOUR_KEY_HERE")
+    @POST("urlshortener/v1/url?key=AIzaSyCArk9oYwb8zLOdbDTOshh13xRoiVuL-DI")
     Call<JsonUrl> getShortUrl(@Body JsonUrl requestBody);
 
     public static final Retrofit retrofit = new Retrofit.Builder()

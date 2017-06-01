@@ -16,9 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name="CopyCastService">
-
-        </service>
+        <!--<service android:name="CopyCastService">-->
+        <!--</service>-->
         <activity
             android:name=".DialogActivity"
             android:excludeFromRecents="true"
@@ -41,14 +40,14 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-        <receiver
-            android:name=".tools.BootReceiver"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
+        <!--<receiver-->
+            <!--android:name=".tools.BootReceiver"-->
+            <!--android:enabled="true"-->
+            <!--android:exported="false">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.BOOT_COMPLETED" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
     </application>
 
 </manifest>

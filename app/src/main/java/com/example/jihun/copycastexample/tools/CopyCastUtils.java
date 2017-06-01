@@ -23,16 +23,16 @@ public class CopyCastUtils {
             return false;
         }
     }
-    static public void saveClipString(Context context, String string) {
-        SharedPreferences pref = context.getSharedPreferences("FormerClipString", Context.MODE_PRIVATE);
-        SharedPreferences.Editor edit = pref.edit();
-        edit.putString("FormerClipString", string);
-        edit.commit();
-    }
-
-    static public String loadClipString(Context context) {
-        SharedPreferences pref = context.getSharedPreferences("FormerClipString", Context.MODE_PRIVATE);
-        String savedString = pref.getString("FormerClipString", null);    // 진동 허용 여부
-        return savedString;
-    }
+//    static public void saveClipString(Context context, String string) {
+//        SharedPreferences pref = context.getSharedPreferences("FormerClipString", Context.MODE_PRIVATE);
+//        SharedPreferences.Editor edit = pref.edit();
+//        edit.putString("FormerClipString", string);
+//        edit.commit();
+//    }
+//
+//    static public String loadClipString(Context context) {
+//        SharedPreferences pref = context.getSharedPreferences("FormerClipString", Context.MODE_PRIVATE);
+//        String savedString = pref.getString("FormerClipString", null);    // 진동 허용 여부
+//        return savedString;
+//    }
 }
