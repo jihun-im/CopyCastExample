@@ -8,4 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="MyDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:textColorPrimary">#000000</item>    <!--content text color-->
+    </style>
+
+
 </resources>
